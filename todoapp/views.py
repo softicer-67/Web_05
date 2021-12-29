@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoModelPermissions, BasePermission
 from rest_framework.viewsets import ModelViewSet
 from .serializers import ProjectSerializer, ToDoSerializer
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
@@ -10,6 +11,12 @@ from .filters import TodoFilter
 
 class ProjectPagination(PageNumberPagination):
     page_size = 20
+
+
+class CustomPermission(BasePermission):
+
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_superuser)
 
 
 class ProjectViewSet(ModelViewSet):
