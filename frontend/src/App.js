@@ -3,6 +3,7 @@ import logo from './logo.svg';
 
 import './bootstrap/css/bootstrap.min.css'
 import './bootstrap/css/sticky-footer-navbar.css'
+import LoginForm from './components/LoginForm.js'
 import Footer from './components/Footer.js'
 import Navbar from './components/Menu.js'
 import TodoList from './components/Todos.js'
@@ -22,10 +23,12 @@ class App extends React.Component {
         this.state = {
             navbarItems: [
                 { name: 'Users', href: '/users' },
-                { name: 'Todos', href: '/todos' }
+                { name: 'Todos', href: '/todos' },
+                { name: 'Login', href: '/login' }
             ],
             users: [],
-            todos: []
+            todos: [],
+            login: []
         }
     }
 
@@ -37,14 +40,13 @@ class App extends React.Component {
                     <Navbar navbarItems={this.state.navbarItems} />
                 </header>
 
-
-
                 <main role="main" className="flex-shrink-0">
                     <div className="container">
 
                         <Routes>
                             <Route path={'/todos'} element={<TodoList todos={this.state.todos} />} />
                             <Route path={'/users'} element={<UserList users={this.state.users} />} />
+                            <Route path={'/login'} element={<LoginForm />} />
                         </Routes>
                     </div>
                 </main>
