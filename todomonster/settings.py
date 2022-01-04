@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # other
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'django_filters',
     # my
@@ -76,17 +77,28 @@ TEMPLATES = [
 WSGI_APPLICATION = 'todomonster.wsgi.application'
 
 REST_FRAMEWORK = {
+
     'DEFAULT_RENDER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
     ],
+
     'DEFAULT_FILTER_BACKENDS': [
         'django_filters.rest_framework.DjangoFilterBackend'
     ],
+
     # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     # 'PAGE_SIZE': 2
+
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
+
 }
 
 # Database
@@ -120,7 +132,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -143,3 +155,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",
     "http://localhost:3000",
 ]
+
+CORS_ORIGIN_WHITELIST = [
+     'http://localhost:3000'
+]
+
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

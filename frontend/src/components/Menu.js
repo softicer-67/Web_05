@@ -1,25 +1,25 @@
 import React from 'react'
-import { Link, Routes, Route } from 'react-router-dom'
-import TodoList from './Todos.js'
-import UserList from './User.js'
+import { Link } from 'react-router-dom'
 
 const NavbarItem = ({ name, href }) => <Link className='nav-link' to={href}>{name}</Link>
 
 
-export default function Navbar({ navbarItems }) {
+export default function Navbar({ navbarItems, login, exit }) {
   return (
     <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a className="navbar-brand" href="#">Fixed navbar</a>
+      <span className="navbar-brand">Fixed navbar</span>
       <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span className="navbar-toggler-icon"></span>
       </button>
       <div className="collapse navbar-collapse" id="navbarCollapse">
         <ul className="navbar-nav mr-auto">
-          {navbarItems.map((item) => (
-            <li className="nav-item active" style={{ display: 'flex' }}>
+          {navbarItems.map((item, index) => (
+            <li key={index}  className="nav-item active" style={{ display: 'flex' }}>
               <NavbarItem name={item.name} href={item.href} />
             </li>
           ))}
+
+          { login ? <button onClick={exit}>Logout</button> : null }
         </ul>
 
         <form className="form-inline mt-2 mt-md-0">

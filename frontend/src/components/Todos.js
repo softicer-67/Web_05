@@ -23,7 +23,7 @@ const TodoList = ({ todos }) => {
                 <th>Is active</th>
                 <th>Create</th>
             </tr>
-            {todos.map((todo) => <TodoItem todo={todo} />)}
+            {todos.map((todo) => <TodoItem key={todo.id} todo={todo} />)}
         </table>
     )
 }
