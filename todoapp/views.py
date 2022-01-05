@@ -13,14 +13,14 @@ class ProjectPagination(PageNumberPagination):
     page_size = 20
 
 
-class CustomPermission(DjangoModelPermissions):
+class CustomPermission(BasePermission):
 
     def has_permission(self, request, view):
         return bool(request.user and request.user.is_superuser)
 
 
 class ProjectViewSet(ModelViewSet):
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [CustomPermission]
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
     pagination_class = ProjectPagination
@@ -38,7 +38,7 @@ class ToDoPagination(LimitOffsetPagination):
 
 
 class ToDoViewSet(ModelViewSet):
-    permission_classes = [DjangoModelPermissionsOrAnonReadOnly]
+    permission_classes = [CustomPermission]
     serializer_class = ToDoSerializer
     queryset = ToDo.objects.all()
     pagination_class = ToDoPagination

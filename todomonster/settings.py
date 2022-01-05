@@ -90,7 +90,7 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 2
 
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        'rest_framework.permissions.IsAuthenticated'
     ],
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -156,8 +156,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-CORS_ORIGIN_WHITELIST = [
-     'http://localhost:3000'
-]
+# CORS_ORIGIN_WHITELIST = [
+#      'http://localhost:3000'
+# ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
