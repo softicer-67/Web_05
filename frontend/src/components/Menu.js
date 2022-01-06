@@ -13,6 +13,7 @@ export default function Navbar({ login, exit }) {
         <ul className="navbar-nav mr-auto">
 
             <li><Link to="/users">Users</Link></li>
+            <li><Link to="/projects">Project</Link></li>
             <li><Link to="/todos">Todos</Link></li>
             <li>
                 { login ? <button onClick={exit}>Logout</button> : <Link to="/login">Login</Link> }
