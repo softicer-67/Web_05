@@ -11,4 +11,4 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializerWithFullName(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
-        fields = ['is_superuser', 'is_staff']
+        fields = ['id', 'username', 'is_superuser', 'is_staff']
