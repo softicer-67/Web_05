@@ -35,15 +35,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'drf_yasg',
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'django_filters',
-    # my
+    'drf_yasg',
+    'graphene_django',
     'userapp',
     'todoapp',
 ]
+
+GRAPHENE = {
+    'SCHEMA': 'todoapp.schema.schema'
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
