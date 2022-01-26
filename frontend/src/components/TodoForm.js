@@ -4,9 +4,9 @@ class TodoForm extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            'id': '',
             'title': '',
-            'project': ''
+            'project': '',
+            'creator': ''
         }
     }
 
@@ -30,7 +30,12 @@ class TodoForm extends React.Component {
     }
 
     handleSubmit(event) {
-        this.props.create_todo(this.state.id, this.state.title, this.state.project)
+        console.log(this.state.id)
+        console.log(this.state.title)
+        console.log(this.state.project)
+
+        // передаётся Title и Project, но потерян Id
+        this.props.create_todo(this.state.title, this.state.project, this.state.creator)
         event.preventDefault()
     }
 
@@ -41,6 +46,9 @@ class TodoForm extends React.Component {
                 <input type='text' name='title' placeholder='title' value={this.state.title} onChange={(event) => this.handleChange(event)} />
                     <select multiple name='project' onChange={(event) => this.handleProjectChange(event)}>
                         {this.props.todos.map((el) => <option value={el.project}> {el.project}</option>)}
+                    </select>
+                    <select multiple name='creator' onChange={(event) => this.handleProjectChange(event)}>
+                        {this.props.todos.map((el) => <option value={el.creator}> {el.creator}</option>)}
                     </select>
                 <input type='submit' value='Create' />
             </form>

@@ -4,6 +4,7 @@ import './bootstrap/css/sticky-footer-navbar.css'
 import './App.css'
 import UserList from './components/User.js'
 import ProjectList from './components/Projects.js'
+import ProjectForm from './components/ProjectForm.js'
 import TodoList from './components/Todos.js'
 import TodoForm from './components/TodoForm.js'
 import Navbar from './components/Menu.js'
@@ -131,19 +132,13 @@ class App extends React.Component {
             .catch(error => console.log(error))
     }
 
-    create_todo(id, title, project) {
-        console.log(id, title, project)
-
+    create_todo(title, project, creator) {
         const headers = this.get_headers()
-        const data = {'id': id, 'text': title, 'project': project}
+        const data = {'title': title, 'project': project, 'creator': creator}
         axios
-            .post('http://127.0.0.1:8000/api/todos/',data, {headers})
+            .post('http://127.0.0.1:8000/api/todos/', data, {headers})
             .then(response => {
-                let new_todo = response.data
-                const author = this.state.authors.filter((el) => el.id === new_todo.author)
-                new_todo.author = author
-                this.setState({todos: [...this.state.todos, new_todo]})
-
+                this.load_data();
             })
             .catch(error => {
                 console.log(error)
@@ -160,6 +155,21 @@ class App extends React.Component {
             .catch(error => console.log(error))
     }
 
+    create_project(id, users) {
+        console.log(id, users)
+
+        const headers = this.get_headers()
+        const data = {'id': id, 'users': users}
+        axios
+            .post('http://127.0.0.1:8000/api/projects/', data, {headers})
+            .then(response => {
+                this.load_data();
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+
     render() {
 
         return (
@@ -173,10 +183,10 @@ class App extends React.Component {
                         <Routes>
                             <Route exact path='/' element={<UserList users={this.state.users} />} />
                             <Route exact path='/todos' element={<TodoList todos={this.state.todos} delete_todo={(id)=>this.delete_todo(id)} />} />
-                            <Route exact path='/todos/create' element={<TodoForm todos={this.state.todos} create_todo={(id, title, project)=>this.create_todo(id, title, project)} />} />
-
+                            <Route exact path='/todos/create' element={<TodoForm todos={this.state.todos} create_todo={(title, project, creator)=>this.create_todo(title, project, creator)} />} />
                             <Route exact path='/users' element={<UserList users={this.state.users} />} />
                             <Route exact path='/projects' element={<ProjectList projects={this.state.projects} delete_projects={(id)=>this.delete_projects(id)}/>} />
+                            <Route exact path='/projects/create' element={<ProjectForm projects={this.state.projects} create_project={(id, users)=>this.create_project(id, users)} />} />
                             <Route exact path='/login' element={<LoginForm get_token={(login, password) => this.get_token(login, password)} />} />
                             <Route exact path='/users:id' element={() => <LoginForm get_token={(login, password) => this.get_token(login, password)} />} />
                         </Routes>
