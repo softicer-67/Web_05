@@ -3,7 +3,7 @@ from userapp.models import User
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=32, unique=True)
+    name = models.CharField(max_length=32)
     users = models.ManyToManyField(User)
     repository = models.URLField(blank=True)
 

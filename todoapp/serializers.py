@@ -6,9 +6,9 @@ from .models import ToDo
 class ProjectSerializer(ModelSerializer):
     # Настройка сериализатора
     # Настройка Foreign Key
-    # owner = HyperlinkedIdentityField(view_name='user-detail')
+    owner = HyperlinkedIdentityField(view_name='user-detail')
     # Настройка Many to many
-    # users = HyperlinkedRelatedField(many=True, view_name='user-detail', read_only=True)
+    users = HyperlinkedRelatedField(many=True, view_name='user-detail', read_only=True)
 
     class Meta:
         model = Project
