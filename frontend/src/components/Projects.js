@@ -1,17 +1,18 @@
 import React from 'react'
 
 
-const ProjectItem = ({ projects }) => {
+const ProjectItem = ({ projects, delete_projects }) => {
     return (
         <tr>
             <td>{projects.name}</td>
             <td>{projects.repository}</td>
             <td>{projects.users}</td>
+            <td><button onClick={()=>delete_projects(projects.id)} type='button'>Delete</button></td>
         </tr>
     )
 }
 
-const projectList = ({ projects }) => {
+const ProjectList = ({ projects, delete_projects }) => {
     return (
         <table className="table">
             <tr>
@@ -19,9 +20,9 @@ const projectList = ({ projects }) => {
                 <th>Repository</th>
                 <th>Users</th>
             </tr>
-            {projects.map((projects, index) => <ProjectItem key={index} projects={projects} />)}
+            {projects.map((projects, index) => <ProjectItem key={index} projects={projects} delete_projects={delete_projects} />)}
         </table>
     )
 }
 
-export default projectList
+export default ProjectList

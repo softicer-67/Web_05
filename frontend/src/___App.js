@@ -5,7 +5,6 @@ import './App.css'
 import UserList from './components/User.js'
 import ProjectList from './components/Projects.js'
 import TodoList from './components/Todos.js'
-import TodoForm from './components/TodoForm.js'
 import Navbar from './components/Menu.js'
 import Footer from './components/Footer.js'
 import LoginForm from './components/LoginForm.js'
@@ -26,19 +25,6 @@ class App extends React.Component {
             token: ''
         }
     }
-
-    get_headers() {
-        let headers = {
-            'Content-Type': 'application/json'
-        }
-        if (this.is_authenticated())
-            {
-            headers['Authorization'] = 'token ' + this.state.token
-        }
-        return headers
-    }
-
-
 
     set_token(token) {
         const cookies = new Cookies()
@@ -121,45 +107,6 @@ class App extends React.Component {
         this.setState({ 'token': token, }, this.load_data)
     }
 
-    delete_todo(id) {
-        const headers = this.get_headers()
-        axios
-            .delete(`http://127.0.0.1:8000/api/todos/${id}`, {headers})
-            .then(this.setState({
-              todos: this.state.todos.filter(el => el.id !== id)
-            }))
-            .catch(error => console.log(error))
-    }
-
-    create_todo(id, title, project) {
-        console.log(id, title, project)
-
-        const headers = this.get_headers()
-        const data = {'id': id, 'text': title, 'project': project}
-        axios
-            .post('http://127.0.0.1:8000/api/todos/',data, {headers})
-            .then(response => {
-                let new_todo = response.data
-                const author = this.state.authors.filter((el) => el.id === new_todo.author)
-                new_todo.author = author
-                this.setState({todos: [...this.state.todos, new_todo]})
-
-            })
-            .catch(error => {
-                console.log(error)
-            })
-    }
-
-    delete_projects(id) {
-        const headers = this.get_headers()
-        axios
-            .delete(`http://127.0.0.1:8000/api/projects/${id}`, {headers})
-            .then(this.setState({
-              projects: this.state.projects.filter(el => el.id !== id)
-            }))
-            .catch(error => console.log(error))
-    }
-
     render() {
 
         return (
@@ -172,11 +119,9 @@ class App extends React.Component {
                     <div className="container">
                         <Routes>
                             <Route exact path='/' element={<UserList users={this.state.users} />} />
-                            <Route exact path='/todos' element={<TodoList todos={this.state.todos} delete_todo={(id)=>this.delete_todo(id)} />} />
-                            <Route exact path='/todos/create' element={<TodoForm todos={this.state.todos} create_todo={(id, title, project)=>this.create_todo(id, title, project)} />} />
-
+                            <Route exact path='/todos' element={<TodoList todos={this.state.todos} />} />
                             <Route exact path='/users' element={<UserList users={this.state.users} />} />
-                            <Route exact path='/projects' element={<ProjectList projects={this.state.projects} delete_projects={(id)=>this.delete_projects(id)}/>} />
+                            <Route exact path='/projects' element={<ProjectList projects={this.state.projects} />} />
                             <Route exact path='/login' element={<LoginForm get_token={(login, password) => this.get_token(login, password)} />} />
                             <Route exact path='/users:id' element={() => <LoginForm get_token={(login, password) => this.get_token(login, password)} />} />
                         </Routes>
